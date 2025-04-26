@@ -1,65 +1,78 @@
-# iCloud Contact Manager
+# 🍏 iCloud Contact Manager
 
-A minimalist web app to easily manage, clean, and export your iCloud contacts.
-Built with ❤️ for Mac users who care about clean, organized contact lists.
+A minimalist, Apple-style tool to create, edit, and manage your iCloud contacts easily — no bloat, no confusion.
 
----
-
-## ✨ Features
-
-- Add new contacts with:
-  - First Name (auto-capitalized)
-  - Last Name (auto-capitalized)
-  - Company (auto-capitalized)
-  - Address (up to State, auto-capitalized)
-  - Phone 1 & Phone 2 (validated for Malaysian numbers)
-  - Email (optional, validation with warning if incorrect)
-  - Birthday (DD/MM/YYYY format)
-  - Tags/Categories (Family, Friends, Work, Other)
-  - Profile Photo
-- Bulk delete selected contacts
-- Export contacts to CSV format
-- Export contacts to iCloud-compatible VCF (.vcf) format
-- Dark Mode toggle (🌙)
-- Apple minimalist-style user interface (inspired by [apple.com](https://apple.com))
+Built for perfectionists. 🧼✨
 
 ---
 
-## 📄 How to Use
+## 📋 Features
 
-1. Open the website.
-2. Navigate between **Add New Contact** and **Manage Contacts** tabs.
-3. Add new contacts manually or upload existing VCF file.
-4. Download your updated contacts as CSV or VCF.
-5. Enjoy your clean contact list! 🚀
+- **Create New Contacts** (First Name, Last Name, Company, Phone 1 & 2, Email, Address, Birthday, Category, Photo Upload)
+- **Manage Existing Contacts** (Import `.vcf`, Export `.vcf` or `.csv`, Delete selected)
+- **Auto Capitalization** for Name, Company, Address fields
+- **Malaysia Phone Number Format Validation** (supports 011 8-digit and 01# 7-digit formats)
+- **Simple Birthday Input** (DD/MM/YYYY format without endless datepicker scrolling)
+- **Email Validation** (optional field)
+- **Dark Mode Toggle** 🌙
+- **Fully Mobile Responsive** 📱
+- **Super Clean UI inspired by [apple.com](https://apple.com)**
+
+---
+
+## 🚀 How to Use
+
+1. **Upload to GitHub**
+   - Push all files (`index.html`, `styles.css`, `script.js`, `favicon.ico`, and `README.md`) into your GitHub repository.
+
+2. **Publish with GitHub Pages**
+   - Go to your repository ➔ `Settings` ➔ `Pages` ➔ `Branch: main` ➔ `/ (root)` ➔ `Save`
+   - Your site will be live at:
+     ```
+     https://<your-github-username>.github.io/<your-repository-name>/
+     ```
+
+---
+
+## 📂 File Structure
+/ (root)
+├── index.html
+├── styles.css
+├── script.js
+├── favicon.ico
+└── README.md
+
+---
+
+## 🎯 Future Upgrades (Optional)
+
+- Full localStorage save (contacts persist even after refreshing)
+- Real VCF parsing + editing (currently placeholder)
+- Bulk tagging system (drag and drop)
+- Birthday reminder integration
+- Export with profile photo embedded
 
 ---
 
 ## 🛠 Tech Stack
 
-- **HTML5** - Clean semantic structure
-- **CSS3** - Apple minimalist design
-- **JavaScript** - Pure vanilla, lightweight and fast
+- HTML5
+- CSS3 (No frameworks, just love)
+- Vanilla JavaScript
+- GitHub Pages for hosting
 
 ---
 
-## ⚡ Future Ideas
+## 📸 Screenshots
 
-- Auto-save contacts locally (localStorage)
-- Import CSV and convert to VCF directly
-- Drag & Drop support
-- Better birthday picker (without endless scrolling)
+> Light Mode ☀️ | Dark Mode 🌙  
+*(You can add screenshots later if you want)*
 
 ---
 
-## 📷 Screenshots
+## ❤️ Credits
 
-> (You can add screenshots of the website once you host it!)
-
----
-
-## 👨‍💻 Author
-
-- Made with ❤️ by AzlyB
+Made with a lot of ☕, ❤️, and a little bit of crazy genius.  
+Enjoy keeping your contacts clean forever! 😎
 
 ---
