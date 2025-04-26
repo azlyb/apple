@@ -1,78 +1,94 @@
-# 🍏 iCloud Contact Manager
+iCloud Contact Manager
 
-A minimalist, Apple-style tool to create, edit, and manage your iCloud contacts easily — no bloat, no confusion.
+Welcome to your simple and clean iCloud Contact Manager app! 🚀
 
-Built for perfectionists. 🧼✨
+This app lets you:
+	•	Create new contacts manually
+	•	View and manage your contacts easily
+	•	Upload VCF files (basic reading)
+	•	Switch between Dark and Light Mode
 
----
+⸻
 
-## 📋 Features
+Installation & Setup
 
-- **Create New Contacts** (First Name, Last Name, Company, Phone 1 & 2, Email, Address, Birthday, Category, Photo Upload)
-- **Manage Existing Contacts** (Import `.vcf`, Export `.vcf` or `.csv`, Delete selected)
-- **Auto Capitalization** for Name, Company, Address fields
-- **Malaysia Phone Number Format Validation** (supports 011 8-digit and 01# 7-digit formats)
-- **Simple Birthday Input** (DD/MM/YYYY format without endless datepicker scrolling)
-- **Email Validation** (optional field)
-- **Dark Mode Toggle** 🌙
-- **Fully Mobile Responsive** 📱
-- **Super Clean UI inspired by [apple.com](https://apple.com)**
+1. Clone the Project
 
----
+Or download the ZIP.
 
-## 🚀 How to Use
+https://github.com/yourusername/icloud-contact-manager.git
 
-1. **Upload to GitHub**
-   - Push all files (`index.html`, `styles.css`, `script.js`, `favicon.ico`, and `README.md`) into your GitHub repository.
+2. Install JSON Server (for local backend)
 
-2. **Publish with GitHub Pages**
-   - Go to your repository ➔ `Settings` ➔ `Pages` ➔ `Branch: main` ➔ `/ (root)` ➔ `Save`
-   - Your site will be live at:
-     ```
-     https://<your-github-username>.github.io/<your-repository-name>/
-     ```
+Make sure you have Node.js installed.
 
----
+npm install -g json-server
 
-## 📂 File Structure
-/ (root)
-├── index.html
-├── styles.css
-├── script.js
-├── favicon.ico
-└── README.md
+3. Create a db.json
 
----
+Inside your project folder:
 
-## 🎯 Future Upgrades (Optional)
+{
+  "contacts": []
+}
 
-- Full localStorage save (contacts persist even after refreshing)
-- Real VCF parsing + editing (currently placeholder)
-- Bulk tagging system (drag and drop)
-- Birthday reminder integration
-- Export with profile photo embedded
+4. Run JSON Server
 
----
+json-server --watch db.json --port 3000
 
-## 🛠 Tech Stack
+5. Open your index.html
 
-- HTML5
-- CSS3 (No frameworks, just love)
-- Vanilla JavaScript
-- GitHub Pages for hosting
+Just open it directly in the browser (no need for localhost server).
 
----
+⸻
 
-## 📸 Screenshots
+Project Structure
 
-> Light Mode ☀️ | Dark Mode 🌙  
-*(You can add screenshots later if you want)*
+/ (root folder)
+|-- index.html
+|-- styles.css
+|-- script.js
+|-- db.json
+|-- README.md
 
----
 
-## ❤️ Credits
 
-Made with a lot of ☕, ❤️, and a little bit of crazy genius.  
-Enjoy keeping your contacts clean forever! 😎
+⸻
 
----
+Features
+	•	Create Contact
+	•	Fill in First Name, Last Name, Company, Phones, Email, Address, Birthday, Category
+	•	Click Save → Stored in db.json
+	•	Manage Contacts
+	•	View all saved contacts
+	•	Select All / Select individual
+	•	Future export/delete features
+	•	VCF Upload
+	•	Upload your VCF file (currently just reads the file, full import coming soon!)
+	•	Dark Mode
+	•	Toggle Light and Dark theme instantly
+	•	Auto Formatting
+	•	Birthday input automatically formats as DD/MM/YYYY
+	•	Malaysian phone numbers auto-formatted
+
+⸻
+
+Coming Soon (BONUS!)
+	•	Bulk Delete selected contacts
+	•	Export contacts as CSV or VCF
+	•	Full VCF file parsing and importing
+	•	Upload Photo with contact
+	•	Loading spinners and better UI effects
+
+⸻
+
+Developer Info
+	•	Built lovingly with ❤️ using plain HTML, CSS, JS.
+	•	Backend: JSON Server (local fake REST API)
+	•	Inspired by iCloud style aesthetics ✨
+
+⸻
+
+License
+
+This project is free to use, improve, remix, or go crazy with it! 😎
