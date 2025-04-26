@@ -154,11 +154,39 @@ document.addEventListener('DOMContentLoaded', () => {
 // =====================
 // MANAGE CONTACTS SECTION EXTRAS (PLACEHOLDER ACTIONS)
 // =====================
+import VCF from 'vcf'; // 👈 Top of your script.js if using modules
+
 document.getElementById('vcfInput').addEventListener('change', (e) => {
   const file = e.target.files[0];
-  if (file) {
-    alert('VCF File uploaded: ' + file.name);
-  }
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const vcardText = event.target.result;
+    const contacts = VCF.parse(vcardText); // 🔥 MAGIC PARSING
+
+    // Clear existing table rows
+    const tbody = document.querySelector('#contactsTable tbody');
+    tbody.innerHTML = '';
+
+    contacts.forEach(contact => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input type="checkbox" /></td>
+        <td>${contact.get('fn')?.valueOf() || ''}</td>
+        <td>${contact.get('n')?.valueOf().split(';')[1] || ''}</td>
+        <td>${contact.get('tel')?.valueOf() || ''}</td>
+        <td></td>
+        <td>${contact.get('email')?.valueOf() || ''}</td>
+        <td>${contact.get('bday')?.valueOf() || ''}</td>
+        <td>Others</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    alert('Contacts loaded successfully! 🚀');
+  };
+  reader.readAsText(file);
 });
 
 document.getElementById('deleteSelected').addEventListener('click', () => {
