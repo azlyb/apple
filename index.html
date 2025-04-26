@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iCloud Contact Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>iCloud Contact Manager</h1>
+    <button id="darkModeToggle">🌙</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-button active" data-tab="create">Create Contact</button>
+    <button class="tab-button" data-tab="manage">Manage Contacts</button>
+  </nav>
+
+  <main>
+    <section id="create" class="tab-content active">
+      <form id="contact-form">
+        <input type="text" id="firstName" placeholder="First Name" required />
+        <input type="text" id="lastName" placeholder="Last Name" required />
+        <input type="text" id="company" placeholder="Company" />
+        <input type="tel" id="phone1" placeholder="Phone 1" />
+        <input type="tel" id="phone2" placeholder="Phone 2" />
+        <input type="email" id="email" placeholder="Email" />
+        <input type="text" id="address" placeholder="Address (up to State only)" />
+        <input type="text" id="birthday" placeholder="Birthday (DD/MM/YYYY)" />
+        
+        <select id="category">
+          <option value="">Select Category</option>
+          <option value="Family">Family</option>
+          <option value="Friends">Friends</option>
+          <option value="Work">Work</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input type="file" id="photo" accept="image/jpeg,image/png" />
+
+        <button type="submit">Save Contact</button>
+      </form>
+    </section>
+
+    <section id="manage" class="tab-content">
+      <div class="upload-section">
+        <input type="file" id="vcfInput" accept=".vcf" />
+        <label for="vcfInput">Choose .vcf File</label>
+      </div>
+
+      <div class="actions">
+        <button id="deleteSelected">Delete Selected</button>
+        <button id="exportCsv">Export to CSV</button>
+        <button id="exportVcf">Export to VCF</button>
+      </div>
+
+      <div class="table-container">
+        <table id="contactsTable">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="selectAll" /></th>
+              <th>Photo</th>
+              <th>First</th>
+              <th>Last</th>
+              <th>Company</th>
+              <th>Phone 1</th>
+              <th>Phone 2</th>
+              <th>Email</th>
+              <th>Birthday</th>
+              <th>Tags</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built with ❤️ by AzlyB</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
