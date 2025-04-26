@@ -1,4 +1,6 @@
+// =====================
 // TAB SWITCHING
+// =====================
 const createTab = document.getElementById('createTab');
 const manageTab = document.getElementById('manageTab');
 const createContact = document.getElementById('createContact');
@@ -18,53 +20,49 @@ manageTab.addEventListener('click', () => {
   createContact.style.display = 'none';
 });
 
+// =====================
 // DARK MODE
+// =====================
 const darkModeToggle = document.getElementById('darkModeToggle');
 darkModeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
 
-// AUTO CAPITALIZATION
-const capitalizeInputs = ['firstName', 'lastName', 'company', 'address'];
-capitalizeInputs.forEach(id => {
-  const input = document.getElementById(id);
-  input.addEventListener('input', () => {
-    input.value = input.value.replace(/\b\w/g, char => char.toUpperCase());
-  });
-});
-
-// BIRTHDAY FORMAT (DD/MM/YYYY)
-const birthdayInput = document.getElementById('birthday');
-birthdayInput.addEventListener('input', (e) => {
-  let value = e.target.value.replace(/\D/g, '');
-  if (value.length >= 2) value = value.slice(0,2) + '/' + value.slice(2);
-  if (value.length >= 5) value = value.slice(0,5) + '/' + value.slice(5,9);
-  e.target.value = value.slice(0, 10);
-});
-
-// MALAYSIA PHONE VALIDATION
-function isValidMalaysianPhone(phone) {
-  const regex = /^(01[0-46-9]{1}\d{7}|011\d{8})$/;
-  return regex.test(phone);
+// =====================
+// HELPERS
+// =====================
+function capitalize(word) {
+  if (!word) return '';
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
+function formatPhone(phone) {
+  phone = phone.replace(/\D/g, '');
+  if (phone.startsWith('601')) {
+    return '+' + phone;
+  } else if (phone.startsWith('1')) {
+    return '+60' + phone;
+  }
+  return phone;
+}
+
+// =====================
 // SAVE CONTACT (CREATE CONTACT SECTION)
+// =====================
 document.getElementById('saveButton').addEventListener('click', () => {
-  // 👇 Collect ALL form values inside this event!
   const contact = {
-    firstName: document.getElementById('firstName').value.trim(),
-    lastName: document.getElementById('lastName').value.trim(),
+    firstName: capitalize(document.getElementById('firstName').value.trim()),
+    lastName: capitalize(document.getElementById('lastName').value.trim()),
     company: document.getElementById('company').value.trim(),
-    phone1: document.getElementById('phone1').value.trim().replace(/\D/g, ''), // Remove non-digits
-    phone2: document.getElementById('phone2').value.trim().replace(/\D/g, ''),
+    phone1: formatPhone(document.getElementById('phone1').value.trim()),
+    phone2: formatPhone(document.getElementById('phone2').value.trim()),
     email: document.getElementById('email').value.trim(),
     address: document.getElementById('address').value.trim(),
-    birthday: document.getElementById('birthday').value.trim(), // Assume DD/MM/YYYY format
+    birthday: document.getElementById('birthday').value.trim(), // DD/MM/YYYY
     category: document.getElementById('category').value,
-    photo: "" // (Handling photo upload separately later if needed)
+    photo: "" // Placeholder for photo
   };
 
-  // 🚀 Now post the full contact
   fetch('http://localhost:3000/contacts', {
     method: 'POST',
     headers: {
@@ -76,8 +74,8 @@ document.getElementById('saveButton').addEventListener('click', () => {
   .then(data => {
     console.log('Success:', data);
     alert('Contact saved successfully!');
-    loadContacts(); // Optional: reload table
-    document.getElementById('contactForm').reset(); // Clear the form after saving
+    document.getElementById('contactForm').reset();
+    loadContacts();
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -86,10 +84,76 @@ document.getElementById('saveButton').addEventListener('click', () => {
 });
 
 // =====================
-// MANAGE CONTACTS SECTION
+// LOAD CONTACTS FUNCTION
 // =====================
+function loadContacts() {
+  fetch('http://localhost:3000/contacts')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector('#contactsTable tbody');
+      tbody.innerHTML = '';
 
-// Dummy placeholder — You can enhance later for VCF parsing/export
+      data.forEach((contact, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><input type="checkbox" data-id="${index}"></td>
+          <td>${capitalize(contact.firstName)} ${capitalize(contact.lastName)}</td>
+          <td>${contact.email}</td>
+          <td>${contact.phone1}</td>
+          <td>${contact.phone2}</td>
+          <td>${contact.address}</td>
+          <td>${contact.birthday}</td>
+          <td>${contact.category}</td>
+          <td>
+            <button onclick="deleteContact(${index})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch((error) => {
+      console.error('Error loading contacts:', error);
+    });
+}
+
+// =====================
+// DELETE CONTACT FUNCTION
+// =====================
+function deleteContact(id) {
+  fetch(`http://localhost:3000/contacts/${id}`, {
+    method: 'DELETE'
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Deleted:', data);
+    alert('Contact deleted!');
+    loadContacts();
+  })
+  .catch((error) => {
+    console.error('Error deleting contact:', error);
+  });
+}
+
+// =====================
+// BIRTHDAY FORMAT (AFTER PAGE LOAD)
+// =====================
+document.addEventListener('DOMContentLoaded', () => {
+  loadContacts();
+
+  const birthdayInput = document.getElementById('birthday');
+  if (birthdayInput) {
+    birthdayInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) value = value.slice(0,2) + '/' + value.slice(2);
+      if (value.length >= 5) value = value.slice(0,5) + '/' + value.slice(5,9);
+      e.target.value = value.slice(0, 10);
+    });
+  }
+});
+
+// =====================
+// MANAGE CONTACTS SECTION EXTRAS (PLACEHOLDER ACTIONS)
+// =====================
 document.getElementById('vcfInput').addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) {
@@ -97,7 +161,6 @@ document.getElementById('vcfInput').addEventListener('change', (e) => {
   }
 });
 
-// Dummy actions
 document.getElementById('deleteSelected').addEventListener('click', () => {
   alert('Selected contacts deleted! 🚀 (Placeholder action)');
 });
@@ -110,7 +173,9 @@ document.getElementById('exportVcf').addEventListener('click', () => {
   alert('Exported as VCF! 🚀 (Placeholder action)');
 });
 
-// SELECT ALL checkbox
+// =====================
+// SELECT ALL CHECKBOX
+// =====================
 const selectAll = document.getElementById('selectAll');
 selectAll.addEventListener('change', (e) => {
   document.querySelectorAll('#contactsTable tbody input[type="checkbox"]').forEach(cb => {
