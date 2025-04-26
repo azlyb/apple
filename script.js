@@ -49,39 +49,40 @@ function isValidMalaysianPhone(phone) {
 }
 
 // SAVE CONTACT (CREATE CONTACT SECTION)
-const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+document.getElementById('saveButton').addEventListener('click', () => {
+  // 👇 Collect ALL form values inside this event!
+  const contact = {
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    company: document.getElementById('company').value.trim(),
+    phone1: document.getElementById('phone1').value.trim().replace(/\D/g, ''), // Remove non-digits
+    phone2: document.getElementById('phone2').value.trim().replace(/\D/g, ''),
+    email: document.getElementById('email').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    birthday: document.getElementById('birthday').value.trim(), // Assume DD/MM/YYYY format
+    category: document.getElementById('category').value,
+    photo: "" // (Handling photo upload separately later if needed)
+  };
 
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  const company = document.getElementById('company').value.trim();
-  const phone1 = document.getElementById('phone1').value.trim().replace(/\D/g, '');
-  const phone2 = document.getElementById('phone2').value.trim().replace(/\D/g, '');
-  const email = document.getElementById('email').value.trim();
-  const address = document.getElementById('address').value.trim();
-  const birthday = document.getElementById('birthday').value.trim();
-  const category = document.getElementById('category').value;
-  const photo = document.getElementById('photo').files[0];
-
-  // Phone validation
-  if (phone1 && !isValidMalaysianPhone(phone1)) {
-    alert('Phone 1 is invalid. It must start with 01 and be 10 or 11 digits.');
-    return;
-  }
-  if (phone2 && !isValidMalaysianPhone(phone2)) {
-    alert('Phone 2 is invalid. It must start with 01 and be 10 or 11 digits.');
-    return;
-  }
-
-  // Email validation (optional)
-  if (email && !/^\S+@\S+\.\S+$/.test(email)) {
-    alert('Invalid email format.');
-    return;
-  }
-
-  alert('✅ Contact saved successfully! (In real app it will save to storage or export)');
-  contactForm.reset();
+  // 🚀 Now post the full contact
+  fetch('http://localhost:3000/contacts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(contact)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    alert('Contact saved successfully!');
+    loadContacts(); // Optional: reload table
+    document.getElementById('contactForm').reset(); // Clear the form after saving
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    alert('Failed to save contact.');
+  });
 });
 
 // =====================
