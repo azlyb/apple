@@ -163,22 +163,33 @@ document.getElementById('vcfInput').addEventListener('change', (e) => {
   const reader = new FileReader();
   reader.onload = function(event) {
     const vcardText = event.target.result;
-    const contacts = VCF.parse(vcardText); // 🔥 MAGIC PARSING
 
-    // Clear existing table rows
+    // Parse manually without library
+    const vcardEntries = vcardText.split('END:VCARD');
     const tbody = document.querySelector('#contactsTable tbody');
     tbody.innerHTML = '';
 
-    contacts.forEach(contact => {
+    vcardEntries.forEach(entry => {
+      if (entry.trim() === '') return;
+
+      const fullNameMatch = entry.match(/FN:(.+)/);
+      const nameMatch = entry.match(/N:(.+)/);
+      const phoneMatch = entry.match(/TEL(?:;[^:]+)?:([^\\n]+)/);
+      const emailMatch = entry.match(/EMAIL(?:;[^:]+)?:([^\\n]+)/);
+      const bdayMatch = entry.match(/BDAY:(.+)/);
+
+      const firstName = nameMatch ? nameMatch[1].split(';')[1] || '' : '';
+      const lastName = nameMatch ? nameMatch[1].split(';')[0] || '' : '';
+
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><input type="checkbox" /></td>
-        <td>${contact.get('fn')?.valueOf() || ''}</td>
-        <td>${contact.get('n')?.valueOf().split(';')[1] || ''}</td>
-        <td>${contact.get('tel')?.valueOf() || ''}</td>
+        <td>${firstName}</td>
+        <td>${lastName}</td>
+        <td>${phoneMatch ? phoneMatch[1].replace(/\s/g, '') : ''}</td>
         <td></td>
-        <td>${contact.get('email')?.valueOf() || ''}</td>
-        <td>${contact.get('bday')?.valueOf() || ''}</td>
+        <td>${emailMatch ? emailMatch[1] : ''}</td>
+        <td>${bdayMatch ? formatBirthday(bdayMatch[1]) : ''}</td>
         <td>Others</td>
       `;
       tbody.appendChild(row);
@@ -188,6 +199,13 @@ document.getElementById('vcfInput').addEventListener('change', (e) => {
   };
   reader.readAsText(file);
 });
+
+// Helper to format Birthday YYYY-MM-DD ➔ DD/MM/YYYY
+function formatBirthday(birthday) {
+  if (birthday.length !== 10) return birthday;
+  const [year, month, day] = birthday.split('-');
+  return `${day}/${month}/${year}`;
+}
 
 document.getElementById('deleteSelected').addEventListener('click', () => {
   alert('Selected contacts deleted! 🚀 (Placeholder action)');
