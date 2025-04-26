@@ -1,6 +1,4 @@
-// =====================
 // TAB SWITCHING
-// =====================
 const createTab = document.getElementById('createTab');
 const manageTab = document.getElementById('manageTab');
 const createContact = document.getElementById('createContact');
@@ -20,17 +18,11 @@ manageTab.addEventListener('click', () => {
   createContact.style.display = 'none';
 });
 
-// =====================
 // DARK MODE
-// =====================
 const darkModeToggle = document.getElementById('darkModeToggle');
 darkModeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
-
-// =====================
-// HELPERS
-// =====================
 
 // Capitalize helper
 function capitalize(word) {
@@ -47,7 +39,7 @@ birthdayInput.addEventListener('input', (e) => {
   e.target.value = value.slice(0, 10);
 });
 
-// Malaysian phone number format
+// Format Malaysian phone number
 function formatPhone(phone) {
   phone = phone.replace(/\D/g, '');
   if (phone.startsWith('601')) {
@@ -58,28 +50,24 @@ function formatPhone(phone) {
   return phone;
 }
 
-// =====================
 // SAVE CONTACT (CREATE CONTACT SECTION)
-// =====================
 document.getElementById('saveButton').addEventListener('click', () => {
   const contact = {
     firstName: capitalize(document.getElementById('firstName').value.trim()),
     lastName: capitalize(document.getElementById('lastName').value.trim()),
-    company: capitalize(document.getElementById('company').value.trim()),
+    company: document.getElementById('company').value.trim(),
     phone1: formatPhone(document.getElementById('phone1').value.trim()),
     phone2: formatPhone(document.getElementById('phone2').value.trim()),
     email: document.getElementById('email').value.trim(),
-    address: capitalize(document.getElementById('address').value.trim()),
+    address: document.getElementById('address').value.trim(),
     birthday: document.getElementById('birthday').value.trim(),
     category: document.getElementById('category').value,
-    photo: "" // Placeholder
+    photo: "" // Placeholder for now
   };
 
   fetch('http://localhost:3000/contacts', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(contact)
   })
   .then(response => response.json())
@@ -87,60 +75,15 @@ document.getElementById('saveButton').addEventListener('click', () => {
     console.log('Success:', data);
     alert('Contact saved successfully!');
     document.getElementById('contactForm').reset();
-    loadContacts();
+    loadContacts(); // Refresh contacts table
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('Error:', error);
     alert('Failed to save contact.');
   });
 });
 
-// =====================
-// MANAGE CONTACTS SECTION
-// =====================
-
-// Dummy VCF upload (placeholder)
-document.getElementById('vcfInput').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      const vcfText = event.target.result;
-      alert('VCF Contacts loaded successfully! 🚀');
-      
-      // 👉 After loading, refresh Manage Contacts
-      setTimeout(loadContacts, 500);
-    };
-    reader.readAsText(file);
-  }
-});
-
-// Dummy Actions (delete / export buttons)
-document.getElementById('deleteSelected').addEventListener('click', () => {
-  alert('Selected contacts deleted! 🚀 (Placeholder)');
-});
-
-document.getElementById('exportCsv').addEventListener('click', () => {
-  alert('Exported as CSV! 🚀 (Placeholder)');
-});
-
-document.getElementById('exportVcf').addEventListener('click', () => {
-  alert('Exported as VCF! 🚀 (Placeholder)');
-});
-
-// =====================
-// SELECT ALL CHECKBOX
-// =====================
-const selectAll = document.getElementById('selectAll');
-selectAll.addEventListener('change', (e) => {
-  document.querySelectorAll('#contactsTable tbody input[type="checkbox"]').forEach(cb => {
-    cb.checked = e.target.checked;
-  });
-});
-
-// =====================
-// LOAD CONTACTS (Manage Contacts Table)
-// =====================
+// LOAD CONTACTS (Manage Section)
 function loadContacts() {
   fetch('http://localhost:3000/contacts')
     .then(response => response.json())
@@ -148,22 +91,59 @@ function loadContacts() {
       const tbody = document.querySelector('#contactsTable tbody');
       tbody.innerHTML = '';
 
-      contacts.forEach(contact => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><input type="checkbox" /></td>
-          <td>${contact.firstName}</td>
-          <td>${contact.lastName}</td>
+      contacts.forEach((contact, index) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td><input type="checkbox" data-index="${index}"></td>
+          <td>${contact.firstName} ${contact.lastName}</td>
           <td>${contact.phone1}</td>
-          <td>${contact.phone2}</td>
           <td>${contact.email}</td>
-          <td>${contact.birthday}</td>
           <td>${contact.category}</td>
         `;
-        tbody.appendChild(tr);
+
+        tbody.appendChild(row);
       });
     })
     .catch(error => {
       console.error('Error loading contacts:', error);
     });
 }
+
+// INITIAL LOAD
+loadContacts();
+
+// HANDLE VCF FILE UPLOAD (Placeholder)
+document.getElementById('vcfInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      console.log('VCF Content:', text);
+      alert('VCF File uploaded successfully! (Import feature coming soon)');
+    };
+    reader.readAsText(file);
+  }
+});
+
+// SELECT ALL CHECKBOX
+const selectAll = document.getElementById('selectAll');
+selectAll.addEventListener('change', (e) => {
+  document.querySelectorAll('#contactsTable tbody input[type="checkbox"]').forEach(cb => {
+    cb.checked = e.target.checked;
+  });
+});
+
+// Dummy delete
+document.getElementById('deleteSelected').addEventListener('click', () => {
+  alert('Delete selected contacts (Coming soon!)');
+});
+
+// Dummy export
+document.getElementById('exportCsv').addEventListener('click', () => {
+  alert('Export contacts to CSV (Coming soon!)');
+});
+document.getElementById('exportVcf').addEventListener('click', () => {
+  alert('Export contacts to VCF (Coming soon!)');
+});
