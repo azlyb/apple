@@ -165,3 +165,9 @@ function formatBirthdayForVcf(birthday) {
   const [day, month, year] = birthday.split("/");
   return `${year}${month}${day}`;
 }
+
+// Hide loading screen when page is ready
+window.addEventListener('load', () => {
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.style.display = 'none';
+});
