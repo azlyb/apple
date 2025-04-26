@@ -1,0 +1,125 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background: #007bff;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+header button {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: #fff;
+  color: #007bff;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+nav button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+nav .active {
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+
+main {
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+form input, form select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+#saveButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  cursor: pointer;
+}
+
+.vcf-upload {
+  margin: 1rem 0;
+}
+
+.upload-btn {
+  background: #17a2b8;
+  color: white;
+  padding: 0.7rem 1rem;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.actions {
+  margin-bottom: 1rem;
+}
+
+.actions button {
+  margin-right: 0.5rem;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.dark-mode {
+  background: #222;
+  color: #eee;
+}
+
+.dark-mode header {
+  background: #111;
+}
+
+.dark-mode nav .active {
+  background: #555;
+}
+
+.dark-mode #saveButton, 
+.dark-mode .upload-btn, 
+.dark-mode .actions button {
+  background: #444;
+}
