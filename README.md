@@ -44,12 +44,12 @@ Just open it directly in the browser (no need for localhost server).
 
 Project Structure
 
-/ (root folder)
-|-- index.html
-|-- styles.css
-|-- script.js
-|-- db.json
-|-- README.md
+<p>/ (root folder)</p>
+<p>|-- index.html</p>
+<p>|-- styles.css</p>
+<p>|-- script.js</p>
+<p>|-- db.json</p>
+<p>|-- README.md/p>
 
 
 
