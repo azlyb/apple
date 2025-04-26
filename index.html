@@ -3,37 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <title>iCloud Contact Manager</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <div id="loadingScreen">
-  <div class="loader"></div>
-  <p>Loading…</p>
-</div>
   <header>
     <h1>iCloud Contact Manager</h1>
-    <button id="darkModeToggle">🌙</button>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
   </header>
 
-  <nav class="tabs">
-    <button class="tab-button active" data-tab="create">Create Contact</button>
-    <button class="tab-button" data-tab="manage">Manage Contacts</button>
-  </nav>
-
   <main>
-    <section id="create" class="tab-content active">
-      <form id="contact-form">
+    <div class="tabs">
+      <button id="createTab" class="active">➕ Create Contact</button>
+      <button id="manageTab">📂 Manage Contacts</button>
+    </div>
+
+    <section id="createContact">
+      <form id="contactForm">
         <input type="text" id="firstName" placeholder="First Name" required />
         <input type="text" id="lastName" placeholder="Last Name" required />
         <input type="text" id="company" placeholder="Company" />
-        <input type="tel" id="phone1" placeholder="Phone 1" />
-        <input type="tel" id="phone2" placeholder="Phone 2" />
+        <input type="tel" id="phone1" placeholder="Phone 1 (Malaysia)" />
+        <input type="tel" id="phone2" placeholder="Phone 2 (Malaysia)" />
         <input type="email" id="email" placeholder="Email" />
-        <input type="text" id="address" placeholder="Address (up to State only)" />
+        <input type="text" id="address" placeholder="Address" />
         <input type="text" id="birthday" placeholder="Birthday (DD/MM/YYYY)" />
-        
         <select id="category">
           <option value="">Select Category</option>
           <option value="Family">Family</option>
@@ -41,50 +36,37 @@
           <option value="Work">Work</option>
           <option value="Other">Other</option>
         </select>
-
         <input type="file" id="photo" accept="image/jpeg,image/png" />
-
         <button type="submit">Save Contact</button>
       </form>
     </section>
 
-    <section id="manage" class="tab-content">
-      <div class="upload-section">
-        <input type="file" id="vcfInput" accept=".vcf" />
-        <label for="vcfInput">Choose .vcf File</label>
-      </div>
+    <section id="manageContacts" style="display:none;">
+      <input type="file" id="vcfInput" accept=".vcf" />
+      <button id="deleteSelected">🗑️ Delete Selected</button>
+      <button id="exportCsv">📄 Export CSV</button>
+      <button id="exportVcf">📄 Export VCF</button>
 
-      <div class="actions">
-        <button id="deleteSelected">Delete Selected</button>
-        <button id="exportCsv">Export to CSV</button>
-        <button id="exportVcf">Export to VCF</button>
-      </div>
-
-      <div class="table-container">
-        <table id="contactsTable">
-          <thead>
-            <tr>
-              <th><input type="checkbox" id="selectAll" /></th>
-              <th>Photo</th>
-              <th>First</th>
-              <th>Last</th>
-              <th>Company</th>
-              <th>Phone 1</th>
-              <th>Phone 2</th>
-              <th>Email</th>
-              <th>Birthday</th>
-              <th>Tags</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <table id="contactsTable">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>First</th>
+            <th>Last</th>
+            <th>Phone 1</th>
+            <th>Phone 2</th>
+            <th>Email</th>
+            <th>Birthday</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </section>
   </main>
 
   <footer>
-    <p>Built with ❤️ by AzlyB</p>
+    <p>Built with ❤️ for minimalist users.</p>
   </footer>
 
   <script src="script.js"></script>
