@@ -60,6 +60,6 @@ Built with ❤️ for Mac users who care about clean, organized contact lists.
 
 ## 👨‍💻 Author
 
-- Made with ❤️ by [YourNameHere]
+- Made with ❤️ by AzlyB
 
 ---
