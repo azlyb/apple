@@ -45,7 +45,7 @@ Just open it directly in the browser (no need for localhost server).
 Project Structure
 
 <p>/ (root folder)</p>
-<p>|-- index.html</p>
+<p><stong>|-- index.html</stong></p>
 <p>|-- styles.css</p>
 <p>|-- script.js</p>
 <p>|-- db.json</p>
